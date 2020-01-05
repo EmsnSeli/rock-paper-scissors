@@ -1,0 +1,111 @@
+<!-- ******************************************
+*  Author : Emir Selimovic   
+*  Created On : Sat Jan 04 2020
+*  File : index.html
+******************************************* -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Emir Selimovic">
+    <title>Rock-Paper-Scissors</title>
+</head>
+
+<body>
+    <script>
+        //global array for CP to randomly choose from
+        const plays = ["rock", "paper", "scissors"];
+        const pointsToWin = 5;
+
+        let playerPoints = 0;
+        let computerPoints = 0;
+
+        let winner = "";
+
+        console.log(playerPoints + " poinsfdgts of player" + "\t" + computerPoints + " points of computer");
+
+        //game function
+        function game() {
+            while (playerPoints < pointsToWin || computerPoints < pointsToWin) {
+
+                console.log(playerPoints + " poinsfdgts of player" + "\t" + computerPoints + " points of computer");
+
+                //get the input of the player
+                const playerSelection = playerInput();
+                console.log("Player selected: " + playerSelection);
+
+                //get random input for the computer
+                const computerSelection = computerPlay();
+                console.log("Computer selected: " + computerSelection);
+
+                //choose random function for the computer
+                function computerPlay() {
+                    return plays[Math.floor(Math.random() * 3)];
+                }
+
+                //player input progress
+                function playerInput() {
+                    let input = window.prompt("Choose your weapon:");
+
+                    while (!validateInput(input)) {
+                        console.log("wrong input! Try again");
+                        input = window.prompt("Choose your weapon:");
+                    }
+                    return input.toLowerCase();
+                }
+
+                function validateInput(input) {
+                    if (input) {
+                        input = input.toLowerCase();
+                        if (plays.includes(input)) return true;
+                        else return false;
+                    }
+                    return false;
+                }
+
+                function playRound(playerSelection, computerSelection) {
+                    // your code here!
+                    switch (playerSelection) {
+                        case "rock":
+                            if (computerSelection === "scissors")
+                                playerPoints++;
+                            else if (computerSelection === "paper")
+                                computerPoints++;
+                            else
+                                console.log("Its a Tie");
+                            break;
+                        case "scissors":
+                            if (computerSelection === "paper")
+                                playerPoints++;
+                            else if (computerSelection === "rock")
+                                computerPoints++;
+                            else
+                                console.log("Its a Tie");
+                            break;
+                        case "paper":
+                            if (computerSelection === "rock")
+                                playerPoints++;
+                            else if (computerSelection === "scissors")
+                                computerPoints++;
+                            else
+                                console.log("Its a Tie");
+                            break;
+
+                    }
+                }
+                console.log(playRound(playerSelection, computerSelection));
+            }
+            playerPoints > computerPoints ? winner = "the Player" : winner = "the Computer";
+            console.log("And the winner is: " + winner + "! Congrats!");
+        }
+
+        //start the game
+        game();
+
+
+    </script>
+</body>
+
+</html>
