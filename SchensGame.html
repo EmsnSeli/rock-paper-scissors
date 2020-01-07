@@ -1,0 +1,230 @@
+<!-- ******************************************
+*  Author : Emir Selimovic   
+*  Created On : Mon Jan 06 2020
+*  File : SchensGame.html
+******************************************* -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Emir Selimovic">
+    <title>Rock-Paper-Scissors</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="toptext">
+            <h1>Rock-Paper-Scissors</h1>
+        </div>
+    </header>
+
+    <div class="center">
+        <div class="playerShow">
+            <p>Your Points:</p>
+            <p class="playerPoints">0</p>
+        </div>
+
+        <div class="playerDiv">
+            <p>Choose your weapon!</p>
+            <input type="image" src="rock.png" class="rock" width="100px">
+            <input type="image" src="paper.png" class="paper" width="100px" />
+            <input type="image" src="scissors.png" class="scissors" width="100px" />
+        </div>
+
+        <div class="computerShow">
+            <p>Computer Points:</p>
+            <p class="computerPoints">0</p>
+        </div>
+    </div>
+
+    <div id="playroundShow">
+        <p class="youchose"></p>
+        <p class="computerchose"></p>
+        <p class="roundErgebnis"></p>
+        <h1 class="winner"></h1>
+    </div>
+
+
+    <script>
+        //global array for CP to randomly choose from
+        const plays = ["rock", "paper", "scissors"];
+        const pointsToWin = 5;
+
+        //player and computerpoints
+        let playerPoints = 0;
+        let computerPoints = 0;
+
+        //the winner in the end
+        let winner = "";
+
+        //get the input of the player   
+        let playerSelection = "";
+        //get random input for the computer
+        const computerSelection = computerPlay();
+
+
+        let playerPointsText = document.querySelector(".playerPoints");
+        let computerPointsText = document.querySelector(".computerPoints");
+        let youchoseText = document.querySelector(".youchose");
+        let computerchoseText = document.querySelector(".computerchose");
+        let roundErgebnisText = document.querySelector(".roundErgebnis");
+        let winnerText = document.querySelector(".winner");
+
+        ///eventlisteners for button clicks (choosing rock paper or scissors)
+        let rockImg = document.querySelector(".rock");
+        rockImg.addEventListener("click", () => playerSelectedWeapon("rock"));
+
+        let scissorsImg = document.querySelector(".scissors");
+        scissorsImg.addEventListener("click", () => playerSelectedWeapon("scissors"));
+
+        let paperImg = document.querySelector(".paper");
+        paperImg.addEventListener("click", () => playerSelectedWeapon("paper"));
+        ///
+
+        //player selected weapon
+        function playerSelectedWeapon(playerInput) {
+            playerSelection = playerInput;
+            playRound(playerSelection, computerPlay());
+        }
+
+        //choose random function for the computer
+        function computerPlay() {
+            return plays[Math.floor(Math.random() * 3)];
+        }
+
+
+        function playRound(playerSelection, computerSelection) {
+            if (winner) return;
+
+            console.log("player chose: " + playerSelection + " computer chose: " + computerSelection);
+            youchoseText.textContent = "You Chose: " + playerSelection;
+            computerchoseText.textContent = "The Computer Chose: " + computerSelection;
+            // your code here!
+            switch (playerSelection) {
+                case "rock":
+                    if (computerSelection === "scissors") {
+                        playerPoints++;
+                        roundErgebnisText.textContent = "Player gets a point!";
+                    }
+                    else if (computerSelection === "paper") {
+                        computerPoints++;
+                        roundErgebnisText.textContent = "Computer gets a point!";
+                    }
+                    else
+                        roundErgebnisText.textContent = "Its a Tie";
+                    break;
+                case "scissors":
+                    if (computerSelection === "paper") {
+                        playerPoints++;
+                        roundErgebnisText.textContent = "Player gets a point!";
+                    }
+                    else if (computerSelection === "rock") {
+                        computerPoints++;
+                        roundErgebnisText.textContent = "Computer gets a point!";
+                    }
+                    else
+                        roundErgebnisText.textContent = "Its a Tie";
+                    break;
+                case "paper":
+                    if (computerSelection === "rock") {
+                        playerPoints++;
+                        roundErgebnisText.textContent = "Player gets a point!";
+                    }
+                    else if (computerSelection === "scissors") {
+                        roundErgebnisText.textContent = "Computer gets a point!";
+                        computerPoints++;
+                    }
+                    else
+                        roundErgebnisText.textContent = "Its a Tie";
+                    break;
+
+            }
+            playerPointsText.textContent = playerPoints;
+            computerPointsText.textContent = computerPoints;
+            console.log(playerPoints + " points of player" + "\t" + computerPoints + " points of computer");
+            checkWinner();
+        }
+
+        function checkWinner() {
+            if (playerPoints >= pointsToWin || computerPoints >= pointsToWin) {
+                playerPoints > computerPoints ? winner = "the Player" : winner = "the Computer";
+                console.log("And the winner is: " + winner + "! Congrats!");
+                winnerText.textContent = "And the winner is: " + winner + "! Congrats!";
+
+                var btn = document.createElement("BUTTON");
+                btn.innerHTML = "Play Again?";
+                btn.classList.add("playAgain");
+                let playroundDiv = document.querySelector("#playroundShow");
+                playroundDiv.appendChild(btn);
+
+                btn.addEventListener("click", () => document.location.reload());
+            }
+        }
+
+        function ResetValues() {
+            playerPoints = 0;
+            playerPointsText.textContent = playerPoints;
+            computerPoints = 0;
+            computerPointsText.textContent = computerPoints;
+            winner = "";
+            winnerText.textContent = winner;
+            var btn = document.querySelector(".playAgain");
+            btn.parentElement.removeChild(btn);
+        }
+
+
+        //game function
+        function game() {
+            while (playerPoints < pointsToWin && computerPoints < pointsToWin) {
+
+                console.log(playerPoints + " poinsfdgts of player" + "\t" + computerPoints + " points of computer");
+
+                //get the input of the player
+                const playerSelection = playerInput();
+                console.log("Player selected: " + playerSelection);
+
+                //get random input for the computer
+                const computerSelection = computerPlay();
+                console.log("Computer selected: " + computerSelection);
+
+                //choose random function for the computer
+                function computerPlay() {
+                    return plays[Math.floor(Math.random() * 3)];
+                }
+
+                /* //player input progress
+                function playerInput() {
+                    let input = window.prompt("Choose your weapon:");
+
+                    while (!validateInput(input)) {
+                        console.log("wrong input! Try again");
+                        input = window.prompt("Choose your weapon:");
+                    }
+                    return input.toLowerCase();
+                } */
+
+                /*  function validateInput(input) {
+                     if (input) {
+                         input = input.toLowerCase();
+                         if (plays.includes(input)) return true;
+                         else return false;
+                     }
+                     return false;
+                 } */
+
+                console.log(playRound(playerSelection, computerSelection));
+            }
+
+        }
+
+        //start the game
+        //game();
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+/******************************************
+*  Author : Emir Selimovic   
+*  Created On : Mon Jan 06 2020
+*  File : style.css
+*******************************************/
+body {
+    background-color: rgb(4, 11, 23);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+}
+
+header {
+    border-bottom: 2px solid white;
+    padding-bottom: 10px;
+}
+
+.center {
+    overflow: hidden;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 20px 0 20px;
+}
+
+#playroundShow {
+    text-align: center;
+}
+
+p {
+    font-size: large;
+    color: aliceblue;
+}
+
+.playerDiv {
+    margin: auto;
+    width: 500px;
+}
+
+.playerDiv input {
+    padding: 5px;
+}
+
+
+.computerPoints,
+.playerPoints {
+    font-size: 5em;
+}
+
+.playAgain {
+    padding: 20px;
+    font-size: 15px;
+    background: #fbe901;
+    border: none;
+    color: #083517;
+    border-radius: 5px;
+}
